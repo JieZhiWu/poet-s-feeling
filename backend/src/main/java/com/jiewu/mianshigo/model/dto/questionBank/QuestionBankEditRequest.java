@@ -1,4 +1,4 @@
-package ${packageName}.model.dto.${dataKey};
+package com.jiewu.mianshigo.model.dto.questionBank;
 
 import lombok.Data;
 
@@ -6,16 +6,17 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 编辑${dataName}请求
+ * 编辑题库请求
 
  */
 @Data
-public class ${upperDataKey}EditRequest implements Serializable {
+public class QuestionBankEditRequest implements Serializable {
 
     /**
      * id
      */
     private Long id;
+
 
     /**
      * 标题
@@ -23,9 +24,14 @@ public class ${upperDataKey}EditRequest implements Serializable {
     private String title;
 
     /**
-     * 内容
+     * 描述
      */
-    private String content;
+    private String description;
+
+    /**
+     * 图片
+     */
+    private String picture;
 
     /**
      * 标签列表
