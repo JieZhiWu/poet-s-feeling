@@ -5,6 +5,7 @@ import { Button } from "antd";
 export default function Home() {
   return (
     <main className={styles.main}>
+      <Button type="primary">题目大全</Button>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
