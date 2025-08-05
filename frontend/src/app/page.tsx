@@ -1,96 +1,60 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import { Button } from "antd";
+"use server";
+import Title from "antd/es/typography/Title";
+import { Divider, Flex, message } from "antd";
+import Link from "next/link";
+import { listQuestionBankVoByPageUsingPost } from "@/api/questionBankController";
+import { listQuestionVoByPageUsingPost } from "@/api/questionController";
+import QuestionBankList from "@/components/QuestionBankList";
+import QuestionList from "@/components/QuestionList";
+import "./index.css";
 
-export default function Home() {
+/**
+ * 主页
+ * @constructor
+ */
+export default async function HomePage() {
+  let questionBankList: API.QuestionBankVO[] = [];
+  let questionList = [];
+
+  try {
+    const res = await listQuestionBankVoByPageUsingPost({
+      pageSize: 12,
+      sortField: "createTime",
+      sortOrder: "descend",
+    });
+    // @ts-ignore
+    questionBankList = res.data.records ?? [];
+  } catch (e) {
+    // @ts-ignore
+    message.error("获取题库列表失败，" + e.message);
+  }
+
+  try {
+    const res = await listQuestionVoByPageUsingPost({
+      pageSize: 12,
+      sortField: "createTime",
+      sortOrder: "descend",
+    });
+    // @ts-ignore
+    questionList = res.data.records ?? [];
+  } catch (e) {
+    // @ts-ignore
+    message.error("获取题目列表失败，" + e.message);
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <div id="homePage" className="max-width-content">
+      <Flex justify="space-between" align="center">
+        <Title level={3}>最新题库</Title>
+        <Link href={"/banks"}>查看更多</Link>
+      </Flex>
+      <QuestionBankList questionBankList={questionBankList} />
+      <Divider />
+      <Flex justify="space-between" align="center">
+        <Title level={3}>最新题目</Title>
+        <Link href={"/questions"}>查看更多</Link>
+      </Flex>
+      <QuestionList questionList={questionList} />
+    </div>
   );
 }
