@@ -12,8 +12,10 @@ import com.jiewu.mianshigo.common.ErrorCode;
 import com.jiewu.mianshigo.common.ResultUtils;
 import com.jiewu.mianshigo.constant.CommonConstant;
 import com.jiewu.mianshigo.constant.UserConstant;
+import com.jiewu.mianshigo.exception.BusinessException;
 import com.jiewu.mianshigo.exception.ThrowUtils;
 import com.jiewu.mianshigo.mapper.QuestionMapper;
+import com.jiewu.mianshigo.model.dto.question.QuestionEsDTO;
 import com.jiewu.mianshigo.model.dto.question.QuestionQueryRequest;
 import com.jiewu.mianshigo.model.entity.Question;
 import com.jiewu.mianshigo.model.entity.QuestionBankQuestion;
@@ -27,16 +29,26 @@ import com.jiewu.mianshigo.utils.SqlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -45,13 +57,20 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> implements QuestionService {
+public  class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> implements QuestionService {
 
     @Resource
     private UserService userService;
 
     @Resource
     private QuestionBankQuestionService questionBankQuestionService;
+
+    @Resource
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
+
+    // 标志位：ES 是否可用（避免频繁尝试）
+    // volatile 是一个关键字，用于修饰变量，主要作用是保证变量的可见性和禁止指令重排序
+    private volatile boolean esAvailable = true;
 
     /**
      * 校验数据
@@ -220,15 +239,170 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
             List<QuestionBankQuestion> questionList = questionBankQuestionService.list(lambdaQueryWrapper);
             if (CollUtil.isNotEmpty(questionList)) {
                 // 取出题目 id 集合
-                List<Long> questionIdSet = questionList.stream()
+                Set<Long> questionIdSet = questionList.stream()
                         .map(QuestionBankQuestion::getQuestionId)
-                        .collect(Collectors.toList());
+                        .collect(Collectors.toSet());
                 queryWrapper.in("id", questionIdSet);
+            }else {
+                return new Page<>(current, size, 0);
             }
         }
         // 查询数据库
         Page<Question> questionPage = this.page(new Page<>(current, size),queryWrapper);
         return questionPage;
     }
+
+    /**
+     * 从数据库查询题目（供 ES 降级使用）
+     * @param questionQueryRequest 查询条件
+     * @return 分页结果
+     */
+    private Page<Question> searchFromDb(QuestionQueryRequest questionQueryRequest) {
+        long current = questionQueryRequest.getCurrent();
+        long size = questionQueryRequest.getPageSize();
+
+        // 构造查询条件
+        QueryWrapper<Question> queryWrapper = getQueryWrapper(questionQueryRequest);
+
+        // 处理题库 ID 查询（如果需要）
+        Long questionBankId = questionQueryRequest.getQuestionBankId();
+        if (questionBankId != null) {
+            LambdaQueryWrapper<QuestionBankQuestion> lambdaQueryWrapper = Wrappers.lambdaQuery(QuestionBankQuestion.class)
+                    .select(QuestionBankQuestion::getQuestionId)
+                    .eq(QuestionBankQuestion::getQuestionBankId, questionBankId);
+            List<QuestionBankQuestion> relationList = questionBankQuestionService.list(lambdaQueryWrapper);
+            if (CollUtil.isNotEmpty(relationList)) {
+                Set<Long> questionIdSet = relationList.stream()
+                        .map(QuestionBankQuestion::getQuestionId)
+                        .collect(Collectors.toSet());
+                queryWrapper.in("id", questionIdSet);
+            } else {
+                return new Page<>(current, size, 0); // 没有题目
+            }
+        }
+
+        // 查询数据库
+        return this.page(new Page<>(current, size), queryWrapper);
+    }
+
+    @Override
+    public Page<Question> searchFromEs(QuestionQueryRequest questionQueryRequest) {
+        // 如果 ES 不可用，直接降级
+        if (!esAvailable) {
+            log.warn("ES 已标记为不可用，直接降级到数据库查询");
+            return searchFromDb(questionQueryRequest);
+        }
+
+        try {
+            // 获取参数
+            Long id = questionQueryRequest.getId();
+            Long notId = questionQueryRequest.getNotId();
+            String searchText = questionQueryRequest.getSearchText();
+            List<String> tags = questionQueryRequest.getTags();
+            Long questionBankId = questionQueryRequest.getQuestionBankId();
+            Long userId = questionQueryRequest.getUserId();
+            // 注意，ES 的起始页为 0
+            int current = questionQueryRequest.getCurrent() - 1;
+            int pageSize = questionQueryRequest.getPageSize();
+            String sortField = questionQueryRequest.getSortField();
+            String sortOrder = questionQueryRequest.getSortOrder();
+
+            // 构造查询条件
+            BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+            // 过滤
+            boolQueryBuilder.filter(QueryBuilders.termQuery("isDelete", 0));
+            if (id != null) {
+                boolQueryBuilder.filter(QueryBuilders.termQuery("id", id));
+            }
+            if (notId != null) {
+                boolQueryBuilder.mustNot(QueryBuilders.termQuery("id", notId));
+            }
+            if (userId != null) {
+                boolQueryBuilder.filter(QueryBuilders.termQuery("userId", userId));
+            }
+            if (questionBankId != null) {
+                boolQueryBuilder.filter(QueryBuilders.termQuery("questionBankId", questionBankId));
+            }
+            // 必须包含所有标签
+            if (CollUtil.isNotEmpty(tags)) {
+                for (String tag : tags) {
+                    boolQueryBuilder.filter(QueryBuilders.termQuery("tags", tag));
+                }
+            }
+            // 按关键词检索
+            if (StringUtils.isNotBlank(searchText)) {
+                boolQueryBuilder.should(QueryBuilders.matchQuery("title", searchText));
+                boolQueryBuilder.should(QueryBuilders.matchQuery("content", searchText));
+                boolQueryBuilder.should(QueryBuilders.matchQuery("answer", searchText));
+                boolQueryBuilder.minimumShouldMatch(1);
+            }
+            // 排序
+            SortBuilder<?> sortBuilder = SortBuilders.scoreSort();
+            if (StringUtils.isNotBlank(sortField)) {
+                sortBuilder = SortBuilders.fieldSort(sortField);
+                sortBuilder.order(CommonConstant.SORT_ORDER_ASC.equals(sortOrder) ? SortOrder.ASC : SortOrder.DESC);
+            }
+            // 分页
+            PageRequest pageRequest = PageRequest.of(current, pageSize);
+            // 构造查询
+            NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(boolQueryBuilder)
+                    .withPageable(pageRequest)
+                    .withSorts(sortBuilder)
+                    .build();
+            SearchHits<QuestionEsDTO> searchHits = elasticsearchRestTemplate.search(searchQuery, QuestionEsDTO.class);
+            // 复用 MySQL 的分页对象，封装返回结果
+            Page<Question> page = new Page<>();
+            page.setTotal(searchHits.getTotalHits());
+            List<Question> resourceList = new ArrayList<>();
+            if (searchHits.hasSearchHits()) {
+                List<SearchHit<QuestionEsDTO>> searchHitList = searchHits.getSearchHits();
+                for (SearchHit<QuestionEsDTO> questionEsDTOSearchHit : searchHitList) {
+                    resourceList.add(QuestionEsDTO.dtoToObj(questionEsDTOSearchHit.getContent()));
+                }
+            }
+            page.setRecords(resourceList);
+            return page;
+        } catch (Exception e) {
+            // 记录详细错误日志
+            log.error("Elasticsearch 查询失败，将降级到数据库。请求参数: {}", questionQueryRequest, e);
+            esAvailable = false; // 标记 ES 不可用，避免后续请求反复尝试
+
+            // 降级到数据库
+            return searchFromDb(questionQueryRequest);
+        }
+    }
+
+    /**
+     * 提供一个恢复机制，定时检查 ES 是否恢复
+     */
+    public void resetEsAvailable() {
+        esAvailable = true;
+        log.info("已重置 ES 可用状态，下次请求将尝试使用 ES");
+    }
+
+
+    /**
+     * 批量删除题目
+     *
+     * @param questionIdList
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void batchDeleteQuestions(List<Long> questionIdList) {
+        ThrowUtils.throwIf(CollUtil.isEmpty(questionIdList), ErrorCode.PARAMS_ERROR, "题目列表为空");
+        for (Long questionId : questionIdList) {
+            boolean result = this.removeById(questionId);
+            ThrowUtils.throwIf(!result, ErrorCode.NOT_FOUND_ERROR, "删除题目失败");
+            // 从题库删除题目(移除关联)
+            // 构造查询
+            LambdaQueryWrapper<QuestionBankQuestion> lambdaQueryWrapper = Wrappers.lambdaQuery(QuestionBankQuestion.class)
+                    .eq(QuestionBankQuestion::getQuestionId, questionId);
+            result = questionBankQuestionService.remove(lambdaQueryWrapper);
+            ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR, "从题库删除题目失败");
+
+        }
+    }
+
 
 }

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jiewu.mianshigo.annotation.AuthCheck;
+import com.jiewu.mianshigo.annotation.HotKeyCache;
 import com.jiewu.mianshigo.common.BaseResponse;
 import com.jiewu.mianshigo.common.DeleteRequest;
 import com.jiewu.mianshigo.common.ErrorCode;
@@ -15,10 +16,7 @@ import com.jiewu.mianshigo.common.ResultUtils;
 import com.jiewu.mianshigo.constant.UserConstant;
 import com.jiewu.mianshigo.exception.BusinessException;
 import com.jiewu.mianshigo.exception.ThrowUtils;
-import com.jiewu.mianshigo.model.dto.question.QuestionAddRequest;
-import com.jiewu.mianshigo.model.dto.question.QuestionEditRequest;
-import com.jiewu.mianshigo.model.dto.question.QuestionQueryRequest;
-import com.jiewu.mianshigo.model.dto.question.QuestionUpdateRequest;
+import com.jiewu.mianshigo.model.dto.question.*;
 import com.jiewu.mianshigo.model.entity.Question;
 import com.jiewu.mianshigo.model.entity.QuestionBankQuestion;
 import com.jiewu.mianshigo.model.entity.User;
@@ -33,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -66,6 +65,10 @@ public class QuestionController {
         // todo 在此处将实体类和 DTO 进行转换
         Question question = new Question();
         BeanUtils.copyProperties(questionAddRequest, question);
+        List<String> tags = questionAddRequest.getTags();
+        if (tags != null) {
+            question.setTags(JSONUtil.toJsonStr(tags));
+        }
         // 数据校验
         questionService.validQuestion(question, true);
         // todo 填充默认值
@@ -122,6 +125,10 @@ public class QuestionController {
         // todo 在此处将实体类和 DTO 进行转换
         Question question = new Question();
         BeanUtils.copyProperties(questionUpdateRequest, question);
+        List<String> tags = questionUpdateRequest.getTags();
+        if (tags != null) {
+            question.setTags(JSONUtil.toJsonStr(tags));
+        }
         // 数据校验
         questionService.validQuestion(question, false);
         // 判断是否存在
@@ -192,6 +199,7 @@ public class QuestionController {
      * @param request
      * @return
      */
+    @HotKeyCache(keyPrefix = "myQuestion", idParamIndex = 0)
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<QuestionVO>> listMyQuestionVOByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
                                                                  HttpServletRequest request) {
@@ -246,6 +254,40 @@ public class QuestionController {
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }
+
+    /**
+     * 搜索匹配的题目
+     *
+     * @param questionQueryRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/search/page/vo")
+    public BaseResponse<Page<QuestionVO>> searchQuestionVOByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
+                                                                 HttpServletRequest request) {
+        long size = questionQueryRequest.getPageSize();
+        // 限制爬虫
+        ThrowUtils.throwIf(size > 200, ErrorCode.PARAMS_ERROR);
+        Page<Question> questionPage = questionService.searchFromEs(questionQueryRequest);
+        return ResultUtils.success(questionService.getQuestionVOPage(questionPage, request));
+    }
+
+    /**
+     * 批量删除题目
+     *
+     * @param questionBatchDeleteRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/delete/batch")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Boolean> batchDeleteQuestions(@RequestBody QuestionBatchDeleteRequest questionBatchDeleteRequest,
+                                                      HttpServletRequest request) {
+        ThrowUtils.throwIf(questionBatchDeleteRequest == null, ErrorCode.PARAMS_ERROR);
+        questionService.batchDeleteQuestions(questionBatchDeleteRequest.getQuestionIdList());
+        return ResultUtils.success(true);
+    }
+
 
     // endregion
 }

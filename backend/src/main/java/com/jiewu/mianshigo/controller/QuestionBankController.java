@@ -1,7 +1,9 @@
 package com.jiewu.mianshigo.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jd.platform.hotkey.client.callback.JdHotKeyStore;
 import com.jiewu.mianshigo.annotation.AuthCheck;
+import com.jiewu.mianshigo.annotation.HotKeyCache;
 import com.jiewu.mianshigo.common.BaseResponse;
 import com.jiewu.mianshigo.common.DeleteRequest;
 import com.jiewu.mianshigo.common.ErrorCode;
@@ -30,7 +32,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 题库接口
-
  */
 @RestController
 @RequestMapping("/questionBank")
@@ -141,6 +142,17 @@ public class QuestionBankController {
         ThrowUtils.throwIf(questionBankQueryRequest == null, ErrorCode.PARAMS_ERROR);
         Long id = questionBankQueryRequest.getId();
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
+        // 生成 key
+        String key = "bank_detail_" + id;
+        // 如果是热 key
+        if (JdHotKeyStore.isHotKey(key)) {
+            // 从本地缓存中获取缓存值
+            Object cachedQuestionBankVO = JdHotKeyStore.get(key);
+            if (cachedQuestionBankVO != null) {
+                // 如果缓存中有值，直接返回缓存的值
+                return ResultUtils.success((QuestionBankVO) cachedQuestionBankVO);
+            }
+        }
         // 查询数据库
         QuestionBank questionBank = questionBankService.getById(id);
         ThrowUtils.throwIf(questionBank == null, ErrorCode.NOT_FOUND_ERROR);
@@ -148,12 +160,14 @@ public class QuestionBankController {
         QuestionBankVO questionBankVO = questionBankService.getQuestionBankVO(questionBank, request);
         // 是否要关联查询题库列表
         boolean needQueryQuestionList = questionBankQueryRequest.isNeedQueryQuestionList();
-        if (needQueryQuestionList){
+        if (needQueryQuestionList) {
             QuestionQueryRequest questionQueryRequest = new QuestionQueryRequest();
             questionQueryRequest.setQuestionBankId(id);
             Page<Question> questionPage = questionService.listQuestionByPage(questionQueryRequest);
-            questionBankVO.setQuestionPage(questionPage);
+            questionBankVO.setQuestionPage(questionService.getQuestionVOPage(questionPage, request));
         }
+        // 设置本地缓存 (如果不是热 key, 这个方法不会设置缓存)
+        JdHotKeyStore.smartSet(key, questionBankVO);
         // 获取封装类
         return ResultUtils.success(questionBankVO);
     }
@@ -184,11 +198,11 @@ public class QuestionBankController {
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<QuestionBankVO>> listQuestionBankVOByPage(@RequestBody QuestionBankQueryRequest questionBankQueryRequest,
-                                                               HttpServletRequest request) {
+                                                                       HttpServletRequest request) {
         long current = questionBankQueryRequest.getCurrent();
         long size = questionBankQueryRequest.getPageSize();
         // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        ThrowUtils.throwIf(size > 200, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<QuestionBank> questionBankPage = questionBankService.page(new Page<>(current, size),
                 questionBankService.getQueryWrapper(questionBankQueryRequest));
@@ -203,9 +217,10 @@ public class QuestionBankController {
      * @param request
      * @return
      */
+    @HotKeyCache(keyPrefix = "my_bank_list_", idParamIndex = 0)
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<QuestionBankVO>> listMyQuestionBankVOByPage(@RequestBody QuestionBankQueryRequest questionBankQueryRequest,
-                                                                 HttpServletRequest request) {
+                                                                         HttpServletRequest request) {
         ThrowUtils.throwIf(questionBankQueryRequest == null, ErrorCode.PARAMS_ERROR);
         // 补充查询条件，只查询当前登录用户的数据
         User loginUser = userService.getLoginUser(request);

@@ -12,10 +12,7 @@ import com.jiewu.mianshigo.common.ResultUtils;
 import com.jiewu.mianshigo.constant.UserConstant;
 import com.jiewu.mianshigo.exception.BusinessException;
 import com.jiewu.mianshigo.exception.ThrowUtils;
-import com.jiewu.mianshigo.model.dto.questionBankQuestion.QuestionBankQuestionAddRequest;
-import com.jiewu.mianshigo.model.dto.questionBankQuestion.QuestionBankQuestionQueryRequest;
-import com.jiewu.mianshigo.model.dto.questionBankQuestion.QuestionBankQuestionRemoveRequest;
-import com.jiewu.mianshigo.model.dto.questionBankQuestion.QuestionBankQuestionUpdateRequest;
+import com.jiewu.mianshigo.model.dto.questionBankQuestion.*;
 import com.jiewu.mianshigo.model.entity.QuestionBankQuestion;
 import com.jiewu.mianshigo.model.entity.User;
 import com.jiewu.mianshigo.model.vo.QuestionBankQuestionVO;
@@ -27,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 题库题目关联接口
@@ -171,7 +169,7 @@ public class QuestionBankQuestionController {
         long current = questionBankQuestionQueryRequest.getCurrent();
         long size = questionBankQuestionQueryRequest.getPageSize();
         // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        ThrowUtils.throwIf(size > 200, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<QuestionBankQuestion> questionBankQuestionPage = questionBankQuestionService.page(new Page<>(current, size),
                 questionBankQuestionService.getQueryWrapper(questionBankQuestionQueryRequest));
@@ -210,7 +208,7 @@ public class QuestionBankQuestionController {
      * @param questionBankQuestionRemoveRequest
      * @return
      */
-    @PostMapping("/delete")
+    @PostMapping("/remove")
     public BaseResponse<Boolean> removeQuestionBankQuestion(@RequestBody QuestionBankQuestionRemoveRequest questionBankQuestionRemoveRequest) {
         ThrowUtils.throwIf(questionBankQuestionRemoveRequest == null, ErrorCode.PARAMS_ERROR);
         Long id = questionBankQuestionRemoveRequest.getId();
@@ -222,5 +220,49 @@ public class QuestionBankQuestionController {
         boolean result = questionBankQuestionService.remove(lambdaQueryWrapper);
         return ResultUtils.success(true);
     }
+
+    /**
+     * 批量添加题目到题库
+     *
+     * @param questionBankQuestionBatchAddRequest
+     * @param request
+     * @return
+     */
+    @PostMapping("/add/batch")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Boolean> batchAddQuestionsToBank(
+            @RequestBody QuestionBankQuestionBatchAddRequest questionBankQuestionBatchAddRequest,
+            HttpServletRequest request
+    ) {
+        // 参数校验
+        ThrowUtils.throwIf(questionBankQuestionBatchAddRequest == null, ErrorCode.PARAMS_ERROR);
+        User loginUser = userService.getLoginUser(request);
+        Long questionBankId = questionBankQuestionBatchAddRequest.getQuestionBankId();
+        List<Long> questionIdList = questionBankQuestionBatchAddRequest.getQuestionIdList();
+        questionBankQuestionService.batchAddQuestionsToBank(questionIdList, questionBankId, loginUser);
+        return ResultUtils.success(true);
+    }
+
+    /**
+     * 批量移除题库题目关联
+     *
+     * @param questionBankQuestionBatchRemoveRequest
+     * @return
+     */
+    @PostMapping("/remove/batch")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public BaseResponse<Boolean> batchRemoveQuestionsFromBank(
+            @RequestBody QuestionBankQuestionBatchRemoveRequest questionBankQuestionBatchRemoveRequest,
+            HttpServletRequest request
+    ) {
+        // 参数校验
+        ThrowUtils.throwIf(questionBankQuestionBatchRemoveRequest == null, ErrorCode.PARAMS_ERROR);
+        Long questionBankId = questionBankQuestionBatchRemoveRequest.getQuestionBankId();
+        List<Long> questionIdList = questionBankQuestionBatchRemoveRequest.getQuestionIdList();
+        questionBankQuestionService.batchRemoveQuestionsFromBank(questionIdList, questionBankId);
+        return ResultUtils.success(true);
+    }
+
+
     // endregion
 }
