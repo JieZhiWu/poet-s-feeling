@@ -1,5 +1,5 @@
 "use client";
-import { listQuestionVoByPageUsingPost } from "@/api/questionController";
+import { listQuestionVoByPageUsingPost, searchQuestionVoByPageUsingPost } from "@/api/questionController";
 import type { ActionType, ProColumns } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
 import React, { useRef, useState } from "react";
@@ -30,17 +30,23 @@ const QuestionTable: React.FC = (props: Props) => {
   );
   // 题目总数
   const [total, setTotal] = useState<number>(defaultTotal || 0);
-  // 用于判断是否首次加载
-  const [init, setInit] = useState<boolean>(true);
+  // 注意：这里移除了 init 状态
 
   /**
    * 表格列配置
    */
   const columns: ProColumns<API.QuestionVO>[] = [
     {
+      title: "搜索",
+      dataIndex: "searchText",
+      valueType: "text",
+      hideInTable: true,
+    },
+    {
       title: "标题",
       dataIndex: "title",
       valueType: "text",
+      hideInSearch: true,
       render: (_, record) => {
         return <Link href={`/question/${record.id}`}>{record.title}</Link>;
       },
@@ -79,20 +85,11 @@ const QuestionTable: React.FC = (props: Props) => {
           } as TablePaginationConfig
         }
         request={async (params, sort, filter) => {
-          // 首次请求
-          if (init) {
-            setInit(false);
-            // 如果已有外层传来的默认数据，无需再次查询
-            if (defaultQuestionList && defaultTotal) {
-              return;
-            }
-          }
-
           const sortField = Object.keys(sort)?.[0] || "createTime";
           const sortOrder = sort?.[sortField] || "descend";
 
           // @ts-ignore
-          const { data, code } = await listQuestionVoByPageUsingPost({
+          const { data, code } = await searchQuestionVoByPageUsingPost({
             ...params,
             sortField,
             sortOrder,

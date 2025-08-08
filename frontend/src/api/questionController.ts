@@ -32,6 +32,21 @@ export async function deleteQuestionUsingPost(
   });
 }
 
+/** batchDeleteQuestions POST /api/question/delete/batch */
+export async function batchDeleteQuestionsUsingPost(
+  body: API.QuestionBatchDeleteRequest,
+  options?: { [key: string]: any }
+) {
+  return request<API.BaseResponseBoolean_>("/api/question/delete/batch", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: body,
+    ...(options || {}),
+  });
+}
+
 /** editQuestion POST /api/question/edit */
 export async function editQuestionUsingPost(
   body: API.QuestionEditRequest,
@@ -50,8 +65,8 @@ export async function editQuestionUsingPost(
 /** getQuestionVOById GET /api/question/get/vo */
 export async function getQuestionVoByIdUsingGet(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: { id: string },
-  options?: { [p: string]: any },
+  params: API.getQuestionVOByIdUsingGETParams,
+  options?: { [key: string]: any }
 ) {
   return request<API.BaseResponseQuestionVO_>("/api/question/get/vo", {
     method: "GET",
@@ -102,6 +117,24 @@ export async function listMyQuestionVoByPageUsingPost(
 ) {
   return request<API.BaseResponsePageQuestionVO_>(
     "/api/question/my/list/page/vo",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: body,
+      ...(options || {}),
+    }
+  );
+}
+
+/** searchQuestionVOByPage POST /api/question/search/page/vo */
+export async function searchQuestionVoByPageUsingPost(
+  body: API.QuestionQueryRequest,
+  options?: { [key: string]: any }
+) {
+  return request<API.BaseResponsePageQuestionVO_>(
+    "/api/question/search/page/vo",
     {
       method: "POST",
       headers: {

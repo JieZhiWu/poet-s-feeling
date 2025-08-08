@@ -3,6 +3,7 @@ import {
   GithubFilled,
   LogoutOutlined,
   SearchOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { ProLayout } from "@ant-design/pro-components";
 import { Dropdown, Input, message, theme } from "antd";
@@ -32,7 +33,6 @@ export default function BasicLayout({ children }: Props) {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
-
   /**
    * 用户注销
    */
@@ -44,10 +44,10 @@ export default function BasicLayout({ children }: Props) {
       router.push("/user/login");
     } catch (e) {
       // @ts-ignore
-      message.error("操作失败，" + e  .message);
+      message.error("操作失败，" + e.message);
     }
     return;
-  }
+  };
 
   return (
     <div
@@ -76,6 +76,11 @@ export default function BasicLayout({ children }: Props) {
                 menu={{
                   items: [
                     {
+                      key: "userCenter",
+                      icon: <UserOutlined />,
+                      label: "个人中心",
+                    },
+                    {
                       key: "logout",
                       icon: <LogoutOutlined />,
                       label: "退出登录",
@@ -85,6 +90,8 @@ export default function BasicLayout({ children }: Props) {
                     const { key } = event;
                     if (key === "logout") {
                       userLogout();
+                    } else if (key === "userCenter") {
+                      router.push("/user/center");
                     }
                   },
                 }}
