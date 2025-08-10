@@ -10,13 +10,13 @@ import Link from "next/link";
 import "./index.css";
 
 /**
- * 题库题目详情页
+ * 诗人诗歌详情页
  * @constructor
  */
 export default async function BankQuestionPage({ params }) {
   const { questionBankId, questionId } = params;
 
-  // 获取题库详情
+  // 获取诗人详情
   let bank = undefined;
   try {
     const res = await getQuestionBankVoByIdUsingGet({
@@ -27,14 +27,14 @@ export default async function BankQuestionPage({ params }) {
     });
     bank = res.data;
   } catch (e) {
-    message.error("获取题库列表失败，" + e.message);
+    console.error("获取诗人列表失败，" + e.message);
   }
   // 错误处理
   if (!bank) {
-    return <div>获取题库详情失败，请刷新重试</div>;
+    return <div>获取诗人详情失败，请刷新重试</div>;
   }
 
-  // 获取题目详情
+  // 获取诗歌详情
   let question = undefined;
   try {
     const res = await getQuestionVoByIdUsingGet({
@@ -42,14 +42,14 @@ export default async function BankQuestionPage({ params }) {
     });
     question = res.data;
   } catch (e) {
-    message.error("获取题目详情失败，" + e.message);
+    console.error("获取诗歌详情失败，" + e.message);
   }
   // 错误处理
   if (!question) {
-    return <div>获取题目详情失败，请刷新重试</div>;
+    return <div>获取诗歌详情失败，请刷新重试</div>;
   }
 
-  // 题目菜单列表
+  // 诗歌菜单列表
   const questionMenuItemList = (bank.questionPage?.records || []).map((q) => {
     return {
       label: (

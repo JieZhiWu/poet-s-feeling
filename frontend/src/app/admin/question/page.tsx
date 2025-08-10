@@ -23,7 +23,7 @@ import {
 } from "@ant-design/pro-components";
 
 /**
- * 题目管理页面
+ * 诗歌管理页面
  *
  * @constructor
  */
@@ -32,25 +32,25 @@ const QuestionAdminPage: React.FC = () => {
   const [createModalVisible, setCreateModalVisible] = useState<boolean>(false);
   // 是否显示更新窗口
   const [updateModalVisible, setUpdateModalVisible] = useState<boolean>(false);
-  // 是否显示更新所属题库窗口
+  // 是否显示更新所属诗人窗口
   const [updateBankModalVisible, setUpdateBankModalVisible] =
     useState<boolean>(false);
-  // 是否显示批量向题库添加题目弹窗
+  // 是否显示批量向诗人添加诗歌弹窗
   const [
     batchAddQuestionsToBankModalVisible,
     setBatchAddQuestionsToBankModalVisible,
   ] = useState<boolean>(false);
-  // 是否显示批量从题库移除题目弹窗
+  // 是否显示批量从诗人移除诗歌弹窗
   const [
     batchRemoveQuestionsFromBankModalVisible,
     setBatchRemoveQuestionsFromBankModalVisible,
   ] = useState<boolean>(false);
-  // 当前选中的题目 id 列表
+  // 当前选中的诗歌 id 列表
   const [selectedQuestionIdList, setSelectedQuestionIdList] = useState<
     number[]
   >([]);
   const actionRef = useRef<ActionType>();
-  // 当前题目点击的数据
+  // 当前诗歌点击的数据
   const [currentRow, setCurrentRow] = useState<API.Question>();
 
   /**
@@ -107,7 +107,7 @@ const QuestionAdminPage: React.FC = () => {
       hideInForm: true,
     },
     {
-      title: "所属题库",
+      title: "所属诗人",
       dataIndex: "questionBankId",
       hideInTable: true,
       hideInForm: true,
@@ -118,7 +118,7 @@ const QuestionAdminPage: React.FC = () => {
       valueType: "text",
     },
     {
-      title: "内容",
+      title: "介绍",
       dataIndex: "content",
       valueType: "text",
       hideInSearch: true,
@@ -134,7 +134,7 @@ const QuestionAdminPage: React.FC = () => {
       },
     },
     {
-      title: "答案",
+      title: "诗歌内容",
       dataIndex: "answer",
       valueType: "text",
       hideInSearch: true,
@@ -212,7 +212,7 @@ const QuestionAdminPage: React.FC = () => {
               setUpdateBankModalVisible(true);
             }}
           >
-            修改所属题库
+            修改所属诗人
           </Typography.Link>
           <Typography.Link type="danger" onClick={() => handleDelete(record)}>
             删除
@@ -271,7 +271,7 @@ const QuestionAdminPage: React.FC = () => {
                   setBatchAddQuestionsToBankModalVisible(true);
                 }}
               >
-                批量向题库添加题目
+                批量向诗人添加诗歌
               </Button>
               <Button
                 onClick={() => {
@@ -280,11 +280,11 @@ const QuestionAdminPage: React.FC = () => {
                   setBatchRemoveQuestionsFromBankModalVisible(true);
                 }}
               >
-                批量从题库移除题目
+                批量从诗人移除诗歌
               </Button>
               <Popconfirm
                 title="确认删除"
-                description="你确定要删除这些题目么？"
+                description="你确定要删除这些诗歌么？"
                 onConfirm={() => {
                   // 批量删除
                   handleBatchDelete(selectedRowKeys as number[]);
@@ -298,7 +298,7 @@ const QuestionAdminPage: React.FC = () => {
                     // 打开弹窗
                   }}
                 >
-                  批量删除题目
+                  批量删除诗歌
                 </Button>
               </Popconfirm>
             </Space>

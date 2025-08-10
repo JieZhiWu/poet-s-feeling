@@ -68,6 +68,7 @@ declare namespace API {
   };
 
   type BaseResponsePageQuestionBankVO_ = {
+    records: never[];
     code?: number;
     data?: PageQuestionBankVO_;
     message?: string;
@@ -104,12 +105,16 @@ declare namespace API {
   };
 
   type BaseResponseQuestionBankVO_ = {
+    title: ReactNode;
+    questionPage: any;
+    questionPage: any;
     code?: number;
     data?: QuestionBankVO;
     message?: string;
   };
 
   type BaseResponseQuestionVO_ = {
+    id: string;
     code?: number;
     data?: QuestionVO;
     message?: string;

@@ -47,10 +47,10 @@ const UserLoginPage: React.FC = (props) => {
       <LoginForm<API.UserAddRequest>
         form={form}
         logo={
-          <Image src="/assets/logo.png" alt="面试通" width={44} height={44} />
+          <Image src="/assets/logo.png" alt="芥雾浮心" width={44} height={44} />
         }
-        title="面试通 - 用户登录"
-        subTitle="程序员面试刷题网站"
+        title="芥雾浮心 - 用户登录"
+        subTitle="诗歌爱好者阅读网站"
         onFinish={doSubmit}
         submitter={{
           searchConfig: {

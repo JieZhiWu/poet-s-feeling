@@ -13,7 +13,7 @@ import React, { useRef, useState } from "react";
 import './index.css';
 
 /**
- * 题库管理页面
+ * 诗人分类管理页面
  *
  * @constructor
  */
@@ -23,7 +23,7 @@ const QuestionBankAdminPage: React.FC = () => {
   // 是否显示更新窗口
   const [updateModalVisible, setUpdateModalVisible] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
-  // 当前题库点击的数据
+  // 当前诗人点击的数据
   const [currentRow, setCurrentRow] = useState<API.QuestionBank>();
 
   /**

@@ -5,13 +5,13 @@ import QuestionCard from "@/components/QuestionCard";
 import "./index.css";
 
 /**
- * 题目详情页
+ * 诗歌详情页
  * @constructor
  */
 export default async function QuestionPage({ params }) {
   const { questionId } = params;
 
-  // 获取题目详情
+  // 获取诗歌详情
   let question = undefined;
   try {
     const res = await getQuestionVoByIdUsingGet({
@@ -19,11 +19,11 @@ export default async function QuestionPage({ params }) {
     });
     question = res.data;
   } catch (e) {
-    message.error("获取题目详情失败，" + e.message);
+    message.error("获取诗歌详情失败，" + e.message);
   }
   // 错误处理
   if (!question) {
-    return <div>获取题目详情失败，请刷新重试</div>;
+    return <div>获取诗歌详情失败，请刷新重试</div>;
   }
 
   return (

@@ -11,7 +11,7 @@ interface Props {
 }
 
 /**
- * 批量向题库添加题目弹窗
+ * 批量向诗人添加诗歌弹窗
  * @param props
  * @constructor
  */
@@ -22,9 +22,9 @@ const BatchAddQuestionsToBankModal: React.FC<Props> = (props) => {
     API.QuestionBankVO[]
   >([]);
 
-  // 获取题库列表
+  // 获取诗人列表
   const getQuestionBankList = async () => {
-    // 题库数量不多，直接全量获取
+    // 诗人数量不多，直接全量获取
     const pageSize = 200;
 
     try {
@@ -36,7 +36,7 @@ const BatchAddQuestionsToBankModal: React.FC<Props> = (props) => {
       setQuestionBankList(res.data?.records ?? []);
     } catch (e) {
       // @ts-ignore
-      message.error("获取题库列表失败，" + e.message);
+      message.error("获取诗人列表失败，" + e.message);
     }
   };
 
@@ -68,7 +68,7 @@ const BatchAddQuestionsToBankModal: React.FC<Props> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={"批量向题库添加题目"}
+      title={"批量向诗人添加诗歌"}
       open={visible}
       footer={null}
       onCancel={() => {
@@ -80,7 +80,7 @@ const BatchAddQuestionsToBankModal: React.FC<Props> = (props) => {
         style={{ marginTop: 24 }}
         onFinish={doSubmit}
       >
-        <Form.Item label="选择题库" name="questionBankId">
+        <Form.Item label="选择诗人" name="questionBankId">
           <Select
             style={{ width: "100%" }}
             options={questionBankList.map((questionBank) => {

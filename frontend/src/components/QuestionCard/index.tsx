@@ -11,7 +11,7 @@ interface Props {
 }
 
 /**
- * 题目卡片
+ * 诗歌卡片
  * @param props
  * @constructor
  */
@@ -32,8 +32,10 @@ const QuestionCard = (props: Props) => {
         <MdViewer value={question.content} />
       </Card>
       <div style={{ marginBottom: 16 }} />
-      <Card title="推荐答案">
-        <MdViewer value={question.answer} />
+      <Card title="诗歌内容">
+        <div style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+          <MdViewer value={question.answer} />
+        </div>
       </Card>
     </div>
   );

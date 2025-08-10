@@ -13,7 +13,7 @@ interface Props {
 }
 
 /**
- * 批量从题库移除题目弹窗
+ * 批量从诗人移除诗歌弹窗
  * @param props
  * @constructor
  */
@@ -51,9 +51,9 @@ const BatchRemoveQuestionsToBankModal: React.FC<Props> = (props) => {
     }
   };
 
-  // 获取题库列表
+  // 获取诗人列表
   const getQuestionBankList = async () => {
-    // 题库数量不多，直接全量获取
+    // 诗人数量不多，直接全量获取
     const pageSize = 200;
 
     try {
@@ -65,7 +65,7 @@ const BatchRemoveQuestionsToBankModal: React.FC<Props> = (props) => {
       setQuestionBankList(res.data?.records ?? []);
     } catch (e) {
       // @ts-ignore
-      message.error("获取题库列表失败，" + e.message);
+      message.error("获取诗人列表失败，" + e.message);
     }
   };
 
@@ -76,7 +76,7 @@ const BatchRemoveQuestionsToBankModal: React.FC<Props> = (props) => {
   return (
       <Modal
           destroyOnClose
-          title={"批量从题库移除题目"}
+          title={"批量从诗人移除诗歌"}
           open={visible}
           footer={null}
           onCancel={() => {
@@ -84,7 +84,7 @@ const BatchRemoveQuestionsToBankModal: React.FC<Props> = (props) => {
           }}
       >
         <Form form={form} style={{ marginTop: 24 }} onFinish={doSubmit}>
-          <Form.Item label="选择题库" name="questionBankId">
+          <Form.Item label="选择诗人" name="questionBankId">
             <Select
                 style={{ width: "100%" }}
                 options={questionBankList.map((questionBank) => {

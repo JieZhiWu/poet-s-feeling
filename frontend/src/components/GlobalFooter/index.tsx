@@ -9,7 +9,7 @@ export default function GlobalFooter() {
   const currentYear = new Date().getFullYear();
   return (
     <div className="global-footer">
-      <div>© {currentYear} 面试刷题平台</div>
+      <div>© {currentYear} 诗歌阅读平台</div>
     </div>
   );
 }

@@ -28,14 +28,14 @@ export default async function BankPage({ params }) {
       firstQuestionId = bank.questionPage.records[0].id;
     }
   } catch (e) {
-    console.error("获取题库失败:", e);
+    console.error("获取诗人失败:", e);
   }
 
   if (!bank) {
-    return <div>获取题库详情失败，请付费重试</div>;
+    return <div>获取诗人详情失败，请付费重试</div>;
   }
 
-  // 获取第一道题目，用于 “开始刷题” 按钮跳转
+  // 获取第一道诗歌，用于 “开始刷题” 按钮跳转
   if (bank.questionPage?.records && bank.questionPage.records.length > 0) {
     firstQuestionId = bank.questionPage.records[0].id;
   }
@@ -70,7 +70,7 @@ export default async function BankPage({ params }) {
       <QuestionList
         questionBankId={questionBankId}
         questionList={bank.questionPage?.records ?? []}
-        cardTitle={`题目列表（${bank.questionPage?.total || 0}）`}
+        cardTitle={`诗歌列表（${bank.questionPage?.total || 0}）`}
       />
     </div>
   );

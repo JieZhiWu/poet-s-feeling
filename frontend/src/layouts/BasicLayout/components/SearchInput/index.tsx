@@ -26,7 +26,7 @@ const SearchInput = (props: Props) => {
           borderRadius: 4,
           marginInlineEnd: 12,
         }}
-        placeholder="搜索题目"
+        placeholder="搜索诗歌"
         onSearch={(value) => {
           router.push(`/questions?q=${value}`);
         }}

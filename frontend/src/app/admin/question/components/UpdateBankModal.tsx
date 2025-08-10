@@ -14,7 +14,7 @@ interface Props {
 }
 
 /**
- * 更新题目所属题库弹窗
+ * 更新诗歌所属诗人弹窗
  * @param props
  * @constructor
  */
@@ -25,7 +25,7 @@ const UpdateBankModal: React.FC<Props> = (props) => {
     API.QuestionBankVO[]
   >([]);
 
-  // 获取所属题库列表
+  // 获取所属诗人列表
   const getCurrentQuestionBankIdList = async () => {
     try {
       const res = await listQuestionBankQuestionVoByPageUsingPost({
@@ -38,7 +38,7 @@ const UpdateBankModal: React.FC<Props> = (props) => {
       form.setFieldValue("questionBankIdList" as any, list);
     } catch (e) {
       // @ts-ignore
-      message.error("获取题目所属题库列表失败，" + e.message);
+      message.error("获取诗歌所属诗人列表失败，" + e.message);
     }
   };
 
@@ -48,9 +48,9 @@ const UpdateBankModal: React.FC<Props> = (props) => {
     }
   }, [questionId]);
 
-  // 获取题库列表
+  // 获取诗人列表
   const getQuestionBankList = async () => {
-    // 题库数量不多，直接全量获取
+    // 诗人数量不多，直接全量获取
     const pageSize = 200;
 
     try {
@@ -63,7 +63,7 @@ const UpdateBankModal: React.FC<Props> = (props) => {
       setQuestionBankList(res.data?.records ?? []);
     } catch (e) {
       // @ts-ignore
-      message.error("获取题库列表失败，" + e.message);
+      message.error("获取诗人列表失败，" + e.message);
     }
   };
 
@@ -74,7 +74,7 @@ const UpdateBankModal: React.FC<Props> = (props) => {
   return (
     <Modal
       destroyOnClose
-      title={"更新所属题库"}
+      title={"更新所属诗人"}
       open={visible}
       footer={null}
       onCancel={() => {
@@ -82,7 +82,7 @@ const UpdateBankModal: React.FC<Props> = (props) => {
       }}
     >
       <Form form={form} style={{ marginTop: 24 }}>
-        <Form.Item label="所属题库" name="questionBankIdList">
+        <Form.Item label="所属诗人" name="questionBankIdList">
           <Select
             mode="multiple"
             style={{ width: "100%" }}
@@ -100,10 +100,10 @@ const UpdateBankModal: React.FC<Props> = (props) => {
                   questionBankId: value,
                 });
                 hide();
-                message.success("绑定题库成功");
+                message.success("绑定诗人成功");
               } catch (error: any) {
                 hide();
-                message.error("绑定题库失败，" + error.message);
+                message.error("绑定诗人失败，" + error.message);
               }
             }}
             onDeselect={async (value) => {
@@ -114,10 +114,10 @@ const UpdateBankModal: React.FC<Props> = (props) => {
                   questionBankId: value,
                 });
                 hide();
-                message.success("取消绑定题库成功");
+                message.success("取消绑定诗人成功");
               } catch (error: any) {
                 hide();
-                message.error("取消绑定题库失败，" + error.message);
+                message.error("取消绑定诗人失败，" + error.message);
               }
             }}
           />

@@ -41,10 +41,10 @@ const UserRegisterPage: React.FC = () => {
       <LoginForm
         form={form}
         logo={
-          <Image src="/assets/logo.png" alt="面试通" height={44} width={44} />
+          <Image src="/assets/logo.png" alt="芥雾浮心" height={44} width={44} />
         }
-        title="面试通 - 用户注册"
-        subTitle="程序员面试刷题网站"
+        title="芥雾浮心 - 用户注册"
+        subTitle="诗歌爱好者阅读网站"
         submitter={{
           searchConfig: {
             submitText: "注册",

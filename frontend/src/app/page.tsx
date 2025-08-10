@@ -1,4 +1,3 @@
-"use server";
 import Title from "antd/es/typography/Title";
 import { Divider, Flex, message } from "antd";
 import Link from "next/link";
@@ -7,6 +6,8 @@ import { listQuestionVoByPageUsingPost } from "@/api/questionController";
 import QuestionBankList from "@/components/QuestionBankList";
 import QuestionList from "@/components/QuestionList";
 import "./index.css";
+
+export const dynamic = 'force-dynamic';
 
 /**
  * 主页
@@ -26,7 +27,7 @@ export default async function HomePage() {
     questionBankList = res.data.records ?? [];
   } catch (e) {
     // @ts-ignore
-    message.error("获取题库列表失败，" + e.message);
+    message.error("获取诗人列表失败，" + e.message);
   }
 
   try {
@@ -39,19 +40,19 @@ export default async function HomePage() {
     questionList = res.data.records ?? [];
   } catch (e) {
     // @ts-ignore
-    message.error("获取题目列表失败，" + e.message);
+    message.error("获取诗歌列表失败，" + e.message);
   }
 
   return (
     <div id="homePage" className="max-width-content">
       <Flex justify="space-between" align="center">
-        <Title level={3}>最新题库</Title>
+        <Title level={3}>诗人分类</Title>
         <Link href={"/banks"}>查看更多</Link>
       </Flex>
       <QuestionBankList questionBankList={questionBankList} />
       <Divider />
       <Flex justify="space-between" align="center">
-        <Title level={3}>最新题目</Title>
+        <Title level={3}>诗歌大全</Title>
         <Link href={"/questions"}>查看更多</Link>
       </Flex>
       <QuestionList questionList={questionList} />

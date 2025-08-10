@@ -21,12 +21,12 @@ export default async function BanksPage() {
     questionBankList = res.data.records ?? [];
   } catch (e) {
     // @ts-ignore
-    message.error("获取题库列表失败，" + e.message);
+    console.error("获取诗人列表失败，" + e.message);
   }
 
   return (
     <div id="banksPage" className="max-width-content">
-        <Title level={3}>题库大全</Title>
+        <Title level={3}>诗人大全</Title>
       <QuestionBankList questionBankList={questionBankList} />
     </div>
   );

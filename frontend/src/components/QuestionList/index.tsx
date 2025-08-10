@@ -11,7 +11,7 @@ interface Props {
 }
 
 /**
- * 题目列表组件
+ * 诗歌列表组件
  * @param props
  * @constructor
  */

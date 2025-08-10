@@ -8,7 +8,7 @@ interface Props {
 }
 
 /**
- * 题库列表组件
+ * 诗人列表组件
  * @param props
  * @constructor
  */

@@ -6,13 +6,13 @@ import QuestionTable from "@/components/QuestionTable";
 import "./index.css";
 
 /**
- * 题目列表页面
+ * 诗歌列表页面
  * @constructor
  */
 export default async function QuestionsPage({ searchParams }) {
     // 获取 url 的查询参数
     const { q: searchText } = searchParams;
-    // 题目列表和总数
+    // 诗歌列表和总数
     let questionList = [];
     let total = 0;
 
@@ -29,12 +29,12 @@ export default async function QuestionsPage({ searchParams }) {
         total = res.data.total ?? 0;
     } catch (e) {
         // @ts-ignore
-        message.error("获取题目列表失败，" + e.message);
+        message.error("获取诗歌列表失败，" + e.message);
     }
 
     return (
         <div id="questionsPage" className="max-width-content">
-            <Title level={3}>题目大全</Title>
+            <Title level={3}>诗歌大全</Title>
             <QuestionTable
                 defaultQuestionList={questionList}
                 defaultTotal={total}

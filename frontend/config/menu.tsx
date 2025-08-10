@@ -10,11 +10,11 @@ export const menus = [
   },
   {
     path: "/banks",
-    name: "题库",
+    name: "诗人",
   },
   {
     path: "/questions",
-    name: "题目",
+    name: "诗歌",
   },
   {
     path: "/admin",
@@ -29,12 +29,12 @@ export const menus = [
       },
       {
         path: "/admin/bank",
-        name: "题库管理",
+        name: "诗人分类管理",
         access: ACCESS_ENUM.ADMIN,
       },
       {
         path: "/admin/question",
-        name: "题目管理",
+        name: "诗歌管理",
         access: ACCESS_ENUM.ADMIN,
       },
     ],

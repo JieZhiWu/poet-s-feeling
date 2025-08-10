@@ -58,10 +58,10 @@ export default function BasicLayout({ children }: Props) {
       }}
     >
       <ProLayout
-        title="面试通"
+        title="芥雾浮心"
         layout="top"
         logo={
-          <Image src="/assets/logo.png" height={32} width={32} alt="面试通" />
+          <Image src="/assets/logo.png" height={32} width={32} alt="芥雾浮心" />
         }
         location={{
           pathname,

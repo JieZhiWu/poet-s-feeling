@@ -11,9 +11,12 @@ if (isClient) {
   message = require("antd").message;
 }
 
+const DEV_BASE_URL : string = "http://localhost:8101";
+// const PROD_BASE_URL : string = "http://124.223.189.45";
+
 // 创建 Axios 示例
 const myAxios = axios.create({
-  baseURL: "http://localhost:8101",
+  baseURL: DEV_BASE_URL,
   timeout: 10000,
   withCredentials: true,
 });
@@ -59,7 +62,7 @@ myAxios.interceptors.response.use(
     if (isClient && !error.response && message) {
       // 网络层错误（如服务未启动、CORS、超时）
       console.error("网络错误，请检查后端是否启动:", error.message);
-      message.error("连接失败，请检查后端服务是否运行（如 localhost:8101）");
+      // message.error("连接失败，请检查后端服务是否运行（如 localhost:8101）");
     }
     return Promise.reject(error);
   },
