@@ -174,3 +174,13 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.jiewu.mianshigo.controller
+# LangChain4j 配置
+langchain4j:
+  dashscope:
+    # 硅基流动 API Key
+    api-key: sk-wdeamlusdmuhsxauneukqonfjxublhcrgujjgonukmirrdeo
+    chat-model:
+      # 硅基流动平台的 Kimi 模型
+      model-name: moonshotai/Kimi-K2-Instruct-0905
+      temperature: 0.7
+      max-tokens: 2000

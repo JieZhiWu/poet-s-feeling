@@ -217,7 +217,7 @@ public class QuestionBankController {
      * @param request
      * @return
      */
-    @HotKeyCache(keyPrefix = "my_bank_list_", idParamIndex = 0)
+//    @HotKeyCache(keyPrefix = "my_bank_list_", idParamIndex = 0)
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<QuestionBankVO>> listMyQuestionBankVOByPage(@RequestBody QuestionBankQueryRequest questionBankQueryRequest,
                                                                          HttpServletRequest request) {

@@ -199,7 +199,7 @@ public class QuestionController {
      * @param request
      * @return
      */
-    @HotKeyCache(keyPrefix = "myQuestion", idParamIndex = 0)
+//    @HotKeyCache(keyPrefix = "myQuestion", idParamIndex = 0)
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<QuestionVO>> listMyQuestionVOByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
                                                                  HttpServletRequest request) {

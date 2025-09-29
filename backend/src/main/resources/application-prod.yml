@@ -4,26 +4,23 @@ server:
   port: 8101
 spring:
   # 数据库配置
-  # todo 需替换配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mianshigo
-    username: root
-    password: 0993
+    url: jdbc:mysql://124.223.189.45:3306/mianshigo
+    username: mianshigo_user
+    password: joker_X0993
   # Redis 配置
-  # todo 需替换配置
   redis:
     database: 1
-    host: localhost
+    host: 124.223.189.45
     port: 6379
     timeout: 5000
-    password: 0993
+    password: joker_X0993
   # Elasticsearch 配置
-  # todo 需替换配置
   elasticsearch:
-    uris: http://localhost:9200
+    uris: http://124.223.189.45:9200
     username: root
-    password: 123456
+    password: joker_X0993
 mybatis-plus:
   configuration:
     # 生产环境关闭日志

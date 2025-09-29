@@ -1,14 +1,15 @@
+package com.jiewu.mianshigo.aop;
+
 import com.jd.platform.hotkey.client.callback.JdHotKeyStore;
 import com.jiewu.mianshigo.annotation.HotKeyCache;
 import com.jiewu.mianshigo.model.dto.questionBank.QuestionBankQueryRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class HotKeyCacheAspect {
 
     @Around("@annotation(hotKeyCache)")
