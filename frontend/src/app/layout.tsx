@@ -57,7 +57,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh">
+      <head>
+        <title>芥雾浮心 - 在线诗歌平台</title>
+        <meta name="description" content="品味诗歌意境，感受文字之美，在诗意中静心成长" />
+      </head>
       <body>
         <AntdRegistry>
           <Provider store={store}>

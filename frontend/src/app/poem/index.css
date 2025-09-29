@@ -1,6 +1,6 @@
 .poem-page-layout {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 50%, #6b8f71 100%);
 }
 
 .poem-page-content {
@@ -185,7 +185,7 @@
 }
 
 .step-number {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  background: linear-gradient(135deg, #4a7c59 0%, #2d5a27 100%);
   color: white;
   width: 40px;
   height: 40px;
@@ -196,7 +196,7 @@
   font-weight: bold;
   font-size: 18px;
   flex-shrink: 0;
-  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 4px 16px rgba(74, 124, 89, 0.3);
 }
 
 .step-content {

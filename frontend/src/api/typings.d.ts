@@ -557,6 +557,7 @@ declare namespace API {
     description?: string;
     id?: number;
     picture?: string;
+    questionNum?: number;
     questionPage?: PageQuestionVO_;
     title?: string;
     updateTime?: string;

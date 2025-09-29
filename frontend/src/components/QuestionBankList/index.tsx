@@ -17,21 +17,30 @@ const QuestionBankList = (props: Props) => {
 
   const questionBankView = (questionBank: API.QuestionBankVO) => {
     return (
-      <Card>
-        <Link href={`/bank/${questionBank.id}`}>
-          <Card.Meta
-            avatar={<Avatar src={questionBank.picture} />}
-            title={questionBank.title}
-            description={
-              <Typography.Paragraph
-                type="secondary"
-                ellipsis={{ rows: 1 }}
-                style={{ marginBottom: 0 }}
-              >
-                {questionBank.description}
-              </Typography.Paragraph>
-            }
-          />
+      <Card className="poet-card" hoverable>
+        <Link href={`/bank/${questionBank.id}`} className="poet-link">
+          <div className="poet-header">
+            <Avatar 
+              src={questionBank.picture} 
+              size={64}
+              className="poet-avatar"
+            />
+            <div className="poet-badge">
+              {questionBank.questionNum || 0} 首
+            </div>
+          </div>
+          <div className="poet-content">
+            <div className="poet-title">{questionBank.title}</div>
+            <Typography.Paragraph
+              className="poet-description"
+              ellipsis={{ rows: 2 }}
+            >
+              {questionBank.description}
+            </Typography.Paragraph>
+          </div>
+          <div className="poet-footer">
+            <span className="view-works">查看作品 →</span>
+          </div>
         </Link>
       </Card>
     );

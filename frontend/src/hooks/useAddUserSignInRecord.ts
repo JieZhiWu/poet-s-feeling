@@ -3,7 +3,7 @@ import { message } from "antd";
 import { addUserSignInUsingPost } from "@/api/userController";
 
 /**
- * 添加用户刷题签到记录钩子
+ * 添加用户阅读签到记录钩子
  * @param props
  * @constructor
  */
@@ -18,7 +18,7 @@ const useAddUserSignInRecord = () => {
       await addUserSignInUsingPost({});
     } catch (e) {
       // @ts-ignore
-      message.error("获取刷题签到记录失败，" + e.message);
+      message.error("获取阅读签到记录失败，" + e.message);
     }
     setLoading(false);
   };

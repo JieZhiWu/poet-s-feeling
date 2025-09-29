@@ -8,7 +8,7 @@ import "./index.css";
 interface Props {}
 
 /**
- * 刷题日历图
+ * 阅读日历图
  * @param props
  * @constructor
  */
@@ -30,7 +30,7 @@ const CalendarChart = (props: Props) => {
       setDataList(res.data);
     } catch (e) {
       // @ts-ignore
-      message.error("获取刷题签到记录失败，" + e.message);
+      message.error("获取阅读签到记录失败，" + e.message);
     }
   };
 
@@ -67,7 +67,7 @@ const CalendarChart = (props: Props) => {
       cellSize: ["auto", 16],
       yearLabel: {
         position: "top",
-        formatter: `${year} 年刷题记录`,
+        formatter: `${year} 年阅读记录`,
       },
     },
     series: {

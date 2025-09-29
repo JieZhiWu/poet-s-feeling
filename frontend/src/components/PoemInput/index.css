@@ -1,5 +1,5 @@
 .poem-input-card {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #f0f5f0 0%, #d4e6d4 100%);
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   margin-bottom: 24px;
@@ -21,7 +21,7 @@
 
 .title-icon {
   margin-right: 8px;
-  color: #3498db;
+  color: #4a7c59;
 }
 
 .input-container {
@@ -29,7 +29,7 @@
 }
 
 .poem-textarea {
-  border: 2px solid rgba(52, 152, 219, 0.2);
+  border: 2px solid rgba(74, 124, 89, 0.2);
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.9);
   transition: all 0.3s ease;
@@ -39,13 +39,13 @@
 }
 
 .poem-textarea:hover {
-  border-color: rgba(52, 152, 219, 0.4);
-  box-shadow: 0 4px 16px rgba(52, 152, 219, 0.1);
+  border-color: rgba(74, 124, 89, 0.4);
+  box-shadow: 0 4px 16px rgba(74, 124, 89, 0.1);
 }
 
 .poem-textarea:focus {
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #4a7c59;
+  box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
 }
 
 .action-bar {
@@ -65,19 +65,19 @@
 }
 
 .generate-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #4a7c59 0%, #2d5a27 100%);
   border: none;
   border-radius: 8px;
   height: 44px;
   padding: 0 24px;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 16px rgba(74, 124, 89, 0.3);
 }
 
 .generate-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 20px rgba(74, 124, 89, 0.4);
 }
 
 .generate-button:disabled {

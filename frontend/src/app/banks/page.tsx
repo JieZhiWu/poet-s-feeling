@@ -25,9 +25,34 @@ export default async function BanksPage() {
   }
 
   return (
-    <div id="banksPage" className="max-width-content">
-        <Title level={3}>诗人大全</Title>
-      <QuestionBankList questionBankList={questionBankList} />
+    <div id="banksPage" className="banks-page-container">
+      <div className="page-hero">
+        <div className="hero-content">
+          <Title level={1} className="page-title">
+            👑 诗人大全
+          </Title>
+          <div className="page-subtitle">
+            走进文学大师的世界，感受不同时代的诗意风采
+          </div>
+        </div>
+      </div>
+      
+      <div className="content-wrapper">
+        <div className="stats-section">
+          <div className="stat-card">
+            <div className="stat-number">{questionBankList.length}</div>
+            <div className="stat-label">份诗人图谱</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number">
+              {questionBankList.reduce((total, bank) => total + (bank.questionNum || 0), 0)}
+            </div>
+            <div className="stat-label">首经典诗歌</div>
+          </div>
+        </div>
+        
+        <QuestionBankList questionBankList={questionBankList} />
+      </div>
     </div>
   );
 }

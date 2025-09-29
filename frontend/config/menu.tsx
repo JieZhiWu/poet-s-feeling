@@ -1,5 +1,5 @@
 import { MenuDataItem } from "@ant-design/pro-layout";
-import { CrownOutlined } from "@ant-design/icons";
+import { CrownOutlined, HomeOutlined, BookOutlined, ReadOutlined, EditOutlined } from "@ant-design/icons";
 import ACCESS_ENUM from "@/access/accessEnum";
 
 // 菜单列表
@@ -7,18 +7,22 @@ export const menus = [
   {
     path: "/",
     name: "主页",
+    icon: <HomeOutlined />,
   },
   {
     path: "/poem",
     name: "风之札记",
+    icon: <EditOutlined />,
   },
   {
     path: "/banks",
-    name: "诗人",
+    name: "诗人图谱",
+    icon: <ReadOutlined />,
   },
   {
     path: "/questions",
-    name: "诗歌",
+    name: "诗歌宝库",
+    icon: <BookOutlined />,
   },
   {
     path: "/admin",

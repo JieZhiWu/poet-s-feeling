@@ -1,3 +1,182 @@
 #userCenterPage {
     width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #6b8e23 100%);
+    padding: 24px;
+}
+
+#userCenterPage .ant-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#userCenterPage .ant-card-head {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px 12px 0 0;
+}
+
+#userCenterPage .ant-descriptions-bordered .ant-descriptions-item-label {
+    background: rgba(250, 250, 250, 0.8);
+    font-weight: 500;
+}
+
+#userCenterPage .ant-tag {
+    border-radius: 6px;
+    font-weight: 500;
+    border: none;
+}
+
+#userCenterPage .ant-avatar {
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#userCenterPage .ant-btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+#userCenterPage .ant-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#userCenterPage .ant-modal {
+    border-radius: 12px;
+}
+
+#userCenterPage .ant-modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#userCenterPage .ant-modal-header {
+    background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #6b8e23 100%);
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+}
+
+#userCenterPage .ant-modal-title {
+    color: white;
+    font-weight: 600;
+}
+
+#userCenterPage .ant-modal-close {
+    color: white;
+}
+
+#userCenterPage .ant-modal-close:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+#userCenterPage .ant-form-item-label > label {
+    font-weight: 500;
+    color: #333;
+}
+
+#userCenterPage .ant-input,
+#userCenterPage .ant-input:focus {
+    border-radius: 6px;
+    border: 1px solid #d9d9d9;
+    transition: all 0.3s ease;
+}
+
+#userCenterPage .ant-input:hover {
+    border-color: #6b8e23;
+}
+
+#userCenterPage .ant-input:focus {
+    border-color: #6b8e23;
+    box-shadow: 0 0 0 2px rgba(107, 142, 35, 0.2);
+}
+
+#userCenterPage .ant-card-actions {
+    background: rgba(250, 250, 250, 0.8);
+    border-radius: 0 0 12px 12px;
+}
+
+#userCenterPage .ant-card-actions > li {
+    margin: 0;
+}
+
+#userCenterPage .ant-card-actions > li > span {
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+#userCenterPage .ant-card-actions > li:hover > span {
+    background: rgba(107, 142, 35, 0.1);
+}
+
+/* 装饰性浮动动画 */
+#userCenterPage::before {
+    content: '🌿';
+    position: fixed;
+    top: 10%;
+    left: 5%;
+    font-size: 20px;
+    opacity: 0.3;
+    animation: leafFloat 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#userCenterPage::after {
+    content: '📜';
+    position: fixed;
+    top: 80%;
+    right: 5%;
+    font-size: 18px;
+    opacity: 0.25;
+    animation: leafFloat 5s ease-in-out infinite 2s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes leafFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(-1deg);
+    }
+    75% {
+        transform: translateY(-15px) rotate(1deg);
+    }
+}
+
+/* 标题图标悬停效果 */
+#userCenterPage .ant-typography h4 .anticon {
+    transition: all 0.3s ease;
+}
+
+#userCenterPage .ant-typography h4:hover .anticon {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* 卡片标签页图标动画 */
+#userCenterPage .ant-tabs-tab {
+    transition: all 0.3s ease;
+}
+
+#userCenterPage .ant-tabs-tab:hover .anticon {
+    animation: iconBounce 0.6s ease;
+}
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
 }
