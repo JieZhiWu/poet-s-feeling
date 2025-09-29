@@ -303,15 +303,28 @@ public class UserController {
     @PostMapping("/update/my")
     public BaseResponse<Boolean> updateMyUser(@RequestBody UserUpdateMyRequest userUpdateMyRequest,
             HttpServletRequest request) {
+        log.info("更新个人信息请求，参数: {}", userUpdateMyRequest);
+        
         if (userUpdateMyRequest == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+            log.error("更新个人信息失败：请求参数为空");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数不能为空");
         }
+        
         User loginUser = userService.getLoginUser(request);
+        log.info("当前登录用户ID: {}", loginUser.getId());
+        
         User user = new User();
         BeanUtils.copyProperties(userUpdateMyRequest, user);
         user.setId(loginUser.getId());
+        
+        log.info("准备更新的用户信息: {}", user);
+        
         boolean result = userService.updateById(user);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        log.info("数据库更新结果: {}", result);
+        
+        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR, "更新个人信息失败");
+        
+        log.info("更新个人信息成功");
         return ResultUtils.success(true);
     }
 

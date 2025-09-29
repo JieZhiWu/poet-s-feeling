@@ -1,0 +1,17 @@
+# 阿里云OSS配置示例文件
+# 复制此文件内容到 application.yml 中的对应位置
+
+# 阿里云OSS对象存储配置
+alioss:
+  # OSS访问域名（不包含https://）
+  endpoint: oss-cn-beijing.aliyuncs.com
+  # 访问密钥ID（从阿里云控制台获取）
+  access-key-id: LTAI5tEhBtfpgxJ3diyAkQ68
+  # 访问密钥Secret（从阿里云控制台获取）
+  access-key-secret: R5on1ksfOS6VEHlFv1afhaJEqNmYje
+  # 存储桶名称
+  bucket-name: poem-s-feeling
+
+# 同时需要更新 FileConstant.java 中的 OSS_HOST 常量
+# 格式：https://存储桶名称.endpoint
+# 例如：https://jw-sky-take-out.oss-cn-beijing.aliyuncs.com

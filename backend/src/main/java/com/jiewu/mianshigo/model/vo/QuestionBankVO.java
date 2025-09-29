@@ -1,7 +1,6 @@
 package com.jiewu.mianshigo.model.vo;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jiewu.mianshigo.model.entity.Question;
 import com.jiewu.mianshigo.model.entity.QuestionBank;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -60,6 +59,11 @@ public class QuestionBankVO implements Serializable {
      * 题库里的题目列表 (分页)
      */
     Page<QuestionVO> questionPage;
+
+    /**
+     * 题库中题目的数量
+     */
+    private Integer questionNum;
 
     /**
      * 封装类转对象

@@ -129,11 +129,11 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
 # 热 key 探测
-hotkey:
-  app-name: mianshigo
-  caffeine-size: 10000
-  push-period: 1000
-  etcd-server: http://localhost:2379
+#hotkey:
+#  app-name: mianshigo
+#  caffeine-size: 10000
+#  push-period: 1000
+#  etcd-server: http://localhost:2379
 # 微信相关
 wx:
   # 微信公众平台
@@ -163,6 +163,13 @@ cos:
     secretKey: xxx
     region: xxx
     bucket: xxx
+# 阿里云OSS对象存储配置
+# 替换为你自己的阿里云OSS配置
+alioss:
+  endpoint: oss-cn-beijing.aliyuncs.com
+  access-key-id: LTAI5tEhBtfpgxJ3diyAkQ68
+  access-key-secret: R5on1ksfOS6VEHlFv1afhaJEqNmYje
+  bucket-name: jw-sky-take-out
 # 接口文档配置
 knife4j:
   enable: true

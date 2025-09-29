@@ -253,6 +253,44 @@ public  class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> 
     }
 
     /**
+     * 分页获取题目列表（公开访问，用于题库详情页）
+     *
+     * @param questionQueryRequest
+     * @return
+     */
+    @Override
+    public Page<Question> listQuestionByPagePublic(QuestionQueryRequest questionQueryRequest) {
+        long current = questionQueryRequest.getCurrent();
+        long size = questionQueryRequest.getPageSize();
+        // 限制爬虫
+        ThrowUtils.throwIf(size > 200, ErrorCode.PARAMS_ERROR);
+        
+        // 题目查询条件
+        QueryWrapper<Question> queryWrapper = this.getQueryWrapper(questionQueryRequest);
+        // 根据题库查询题目列表接口
+        Long questionBankId = questionQueryRequest.getQuestionBankId();
+        if (questionBankId != null) {
+            // 查询题库内题目id
+            LambdaQueryWrapper<QuestionBankQuestion> lambdaQueryWrapper = Wrappers.lambdaQuery(QuestionBankQuestion.class)
+                    .select(QuestionBankQuestion::getQuestionId)
+                    .eq(QuestionBankQuestion::getQuestionBankId, questionBankId);
+            List<QuestionBankQuestion> questionList = questionBankQuestionService.list(lambdaQueryWrapper);
+            if (CollUtil.isNotEmpty(questionList)) {
+                // 取出题目 id 集合
+                Set<Long> questionIdSet = questionList.stream()
+                        .map(QuestionBankQuestion::getQuestionId)
+                        .collect(Collectors.toSet());
+                queryWrapper.in("id", questionIdSet);
+            } else {
+                return new Page<>(current, size, 0);
+            }
+        }
+        // 查询数据库
+        Page<Question> questionPage = this.page(new Page<>(current, size), queryWrapper);
+        return questionPage;
+    }
+
+    /**
      * 从数据库查询题目（供 ES 降级使用）
      * @param questionQueryRequest 查询条件
      * @return 分页结果

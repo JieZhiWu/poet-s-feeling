@@ -10,15 +10,18 @@ import com.jiewu.mianshigo.exception.ThrowUtils;
 import com.jiewu.mianshigo.mapper.QuestionBankMapper;
 import com.jiewu.mianshigo.model.dto.questionBank.QuestionBankQueryRequest;
 import com.jiewu.mianshigo.model.entity.QuestionBank;
+import com.jiewu.mianshigo.model.entity.QuestionBankQuestion;
 import com.jiewu.mianshigo.model.entity.User;
 import com.jiewu.mianshigo.model.vo.QuestionBankVO;
 import com.jiewu.mianshigo.model.vo.UserVO;
 import com.jiewu.mianshigo.service.QuestionBankService;
+import com.jiewu.mianshigo.service.QuestionBankQuestionService;
 import com.jiewu.mianshigo.service.UserService;
 import com.jiewu.mianshigo.utils.SqlUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,6 +42,10 @@ public class QuestionBankServiceImpl extends ServiceImpl<QuestionBankMapper, Que
 
     @Resource
     private UserService userService;
+
+    @Resource
+    @Lazy
+    private QuestionBankQuestionService questionBankQuestionService;
 
     /**
      * 校验数据
@@ -131,6 +138,12 @@ public class QuestionBankServiceImpl extends ServiceImpl<QuestionBankMapper, Que
         }
         UserVO userVO = userService.getUserVO(user);
         questionBankVO.setUser(userVO);
+        
+        // 2. 统计题库的题目数量
+        QueryWrapper<QuestionBankQuestion> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("questionBankId", questionBank.getId());
+        long questionNum = questionBankQuestionService.count(queryWrapper);
+        questionBankVO.setQuestionNum((int) questionNum);
         // endregion
 
         return questionBankVO;
@@ -161,6 +174,15 @@ public class QuestionBankServiceImpl extends ServiceImpl<QuestionBankMapper, Que
         Set<Long> userIdSet = questionBankList.stream().map(QuestionBank::getUserId).collect(Collectors.toSet());
         Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
                 .collect(Collectors.groupingBy(User::getId));
+        
+        // 2. 统计每个题库的题目数量
+        Set<Long> questionBankIdSet = questionBankList.stream().map(QuestionBank::getId).collect(Collectors.toSet());
+        QueryWrapper<QuestionBankQuestion> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("questionBankId", questionBankIdSet);
+        List<QuestionBankQuestion> questionBankQuestionList = questionBankQuestionService.list(queryWrapper);
+        Map<Long, Long> questionBankIdToQuestionNumMap = questionBankQuestionList.stream()
+                .collect(Collectors.groupingBy(QuestionBankQuestion::getQuestionBankId, Collectors.counting()));
+        
         // 填充信息
         questionBankVOList.forEach(questionBankVO -> {
             Long userId = questionBankVO.getUserId();
@@ -169,6 +191,11 @@ public class QuestionBankServiceImpl extends ServiceImpl<QuestionBankMapper, Que
                 user = userIdUserListMap.get(userId).get(0);
             }
             questionBankVO.setUser(userService.getUserVO(user));
+            
+            // 设置题目数量
+            Long questionBankId = questionBankVO.getId();
+            Long questionNum = questionBankIdToQuestionNumMap.getOrDefault(questionBankId, 0L);
+            questionBankVO.setQuestionNum(questionNum.intValue());
         });
         // endregion
 

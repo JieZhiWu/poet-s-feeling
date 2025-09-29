@@ -1,5 +1,6 @@
 package com.jiewu.mianshigo.service;
 
+import com.jiewu.mianshigo.model.dto.poem.PoemAnalysisResponse;
 import com.jiewu.mianshigo.model.dto.poem.PoemGenerateRequest;
 import com.jiewu.mianshigo.model.dto.poem.PoemResponse;
 import com.jiewu.mianshigo.model.entity.Poem;
@@ -60,7 +61,7 @@ public class PoemServiceTest {
             Long poemId = 1L;
             
             // 测试生成解读
-            var analysisResponse = poemAnalysisService.generateAnalysis(poemId);
+            PoemAnalysisResponse analysisResponse = poemAnalysisService.generateAnalysis(poemId);
             
             System.out.println("Generated Analysis:");
             System.out.println("Analysis: " + analysisResponse.getAnalysis());

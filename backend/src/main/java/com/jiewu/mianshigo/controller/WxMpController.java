@@ -121,7 +121,7 @@ public class WxMpController {
         wxMenuButton3.setName("主菜单三");
         WxMenuButton wxMenuButton3SubButton1 = new WxMenuButton();
         wxMenuButton3SubButton1.setType(MenuButtonType.VIEW);
-        wxMenuButton3SubButton1.setName("编程学习");
+        wxMenuButton3SubButton1.setName("诗歌学习");
         wxMenuButton3SubButton1.setUrl("https://jiewu.icu");
         wxMenuButton3.setSubButtons(Collections.singletonList(wxMenuButton3SubButton1));
 
