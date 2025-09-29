@@ -9,6 +9,10 @@ export const menus = [
     name: "主页",
   },
   {
+    path: "/poem",
+    name: "风之札记",
+  },
+  {
     path: "/banks",
     name: "诗人",
   },

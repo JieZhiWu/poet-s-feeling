@@ -11,6 +11,7 @@ import * as questionController from "./questionController";
 import * as questionBankController from "./questionBankController";
 import * as questionBankQuestionController from "./questionBankQuestionController";
 import * as userController from "./userController";
+import * as poemController from "./poemController";
 export default {
   wxMpController,
   fileController,
@@ -21,4 +22,5 @@ export default {
   questionBankController,
   questionBankQuestionController,
   userController,
+  poemController,
 };

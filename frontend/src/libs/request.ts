@@ -17,7 +17,7 @@ const DEV_BASE_URL : string = "http://localhost:8101";
 // 创建 Axios 示例
 const myAxios = axios.create({
   baseURL: DEV_BASE_URL,
-  timeout: 10000,
+  timeout: 60000,
   withCredentials: true,
 });
 
@@ -69,3 +69,4 @@ myAxios.interceptors.response.use(
 );
 
 export default myAxios;
+export const request = myAxios;
