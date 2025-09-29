@@ -24,6 +24,7 @@ const PoemPage: React.FC = () => {
     }, 100);
   };
 
+
   return (
     <Layout className="poem-page-layout">
       <Content className="poem-page-content">

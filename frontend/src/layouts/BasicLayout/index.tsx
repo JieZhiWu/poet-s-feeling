@@ -20,6 +20,7 @@ import { userLogoutUsingPost } from "@/api/userController";
 import { setLoginUser } from "@/stores/loginUser";
 import { DEFAULT_USER } from "@/constants/user";
 import SearchInput from "@/layouts/BasicLayout/components/SearchInput";
+import getAccessibleMenus from "@/access/menuAccess";
 
 interface Props {
   children: React.ReactNode;
@@ -129,9 +130,9 @@ export default function BasicLayout({ children }: Props) {
           return <GlobalFooter />;
         }}
         onMenuHeaderClick={(e) => console.log(e)}
-        // 定义有哪些菜单项
+        // 定义有哪些菜单项（根据用户权限过滤）
         menuDataRender={() => {
-          return menus;
+          return getAccessibleMenus(loginUser, menus);
         }}
         // 定义菜单项如何渲染
         menuItemRender={(item, dom) => (
