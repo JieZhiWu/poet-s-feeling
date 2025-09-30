@@ -164,12 +164,12 @@ cos:
     region: xxx
     bucket: xxx
 # 阿里云OSS对象存储配置
-# 替换为你自己的阿里云OSS配置
+# todo 替换为自己的阿里云OSS配置
 alioss:
-  endpoint: oss-cn-beijing.aliyuncs.com
-  access-key-id: LTAI5tEhBtfpgxJ3diyAkQ68
-  access-key-secret: R5on1ksfOS6VEHlFv1afhaJEqNmYje
-  bucket-name: jw-sky-take-out
+  endpoint:
+  access-key-id:
+  access-key-secret:
+  bucket-name:
 # 接口文档配置
 knife4j:
   enable: true
@@ -184,8 +184,8 @@ knife4j:
 # LangChain4j 配置
 langchain4j:
   dashscope:
-    # 硅基流动 API Key
-    api-key: sk-wdeamlusdmuhsxauneukqonfjxublhcrgujjgonukmirrdeo
+    # todo 硅基流动 API Key
+    api-key: xxx
     chat-model:
       # 硅基流动平台的 Kimi 模型
       model-name: moonshotai/Kimi-K2-Instruct-0905

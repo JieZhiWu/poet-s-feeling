@@ -38,7 +38,7 @@ INSERT INTO question_bank (title, description, picture, userId, createTime, upda
 ('李清照', '宋代婉约词派代表，号易安居士，中国古代最杰出的女性词人。前期词风清丽，后期沉郁。代表作有《声声慢》《如梦令》《一剪梅》等。', 'https://via.placeholder.com/150x150/4a7c59/ffffff?text=李清照', 1, NOW(), NOW(), 0),
 ('苏轼', '宋代文学家，豪放派词人代表，唐宋八大家之一。其词开豪放一派，对后世影响深远。代表作有《水调歌头·明月几时有》《念奴娇·赤壁怀古》等。', 'https://via.placeholder.com/150x150/4a7c59/ffffff?text=苏轼', 1, NOW(), NOW(), 0),
 ('辛弃疾', '宋代豪放派词人，人称"词中之龙"。其词风格豪放，充满爱国激情。代表作有《破阵子·为陈同甫赋壮词以寄之》《永遇乐·京口北固亭怀古》等。', 'https://via.placeholder.com/150x150/4a7c59/ffffff?text=辛弃疾', 1, NOW(), NOW(), 0),
-('陆游', '宋代爱国诗人，一生笔耕不辍，诗sxsxc风雄浑奔放，充满爱国热情。代表作有《示儿》《游山西村》《钗头凤》等。', 'https://via.placeholder.com/150x150/4a7c59/ffffff?text=陆游', 1, NOW(), NOW(), 0),
+('陆游', '宋代爱国诗人，一生笔耕不辍，诗风雄浑奔放，充满爱国热情。代表作有《示儿》《游山西村》《钗头凤》等。', 'https://via.placeholder.com/150x150/4a7c59/ffffff?text=陆游', 1, NOW(), NOW(), 0),
 
 -- 外国诗人
 ('威廉·莎士比亚', '英国文艺复兴时期最伟大的戏剧家、诗人，被誉为"英国文学之父"。创作了37部戏剧和154首十四行诗。', 'https://via.placeholder.com/150x150/4a7c59/ffffff?text=莎士比亚', 1, NOW(), NOW(), 0),
