@@ -1,0 +1,293 @@
+.poem-page-layout {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 50%, #6b8f71 100%);
+}
+
+.poem-page-content {
+  padding: 0;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* 页面头部 */
+.page-header {
+  position: relative;
+  text-align: center;
+  padding: 60px 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 24px;
+  margin-bottom: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(45, 80, 22, 0.2);
+}
+
+.header-content {
+  position: relative;
+  z-index: 10;
+}
+
+.page-title {
+  color: white;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(0, 0, 0, 0.9);
+  position: relative;
+  z-index: 10;
+}
+
+.page-description {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(0, 0, 0, 0.9);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 500;
+  position: relative;
+  z-index: 10;
+}
+
+/* 漂浮装饰元素 */
+.header-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-element {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+}
+
+.element-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.element-2 {
+  top: 30%;
+  right: 15%;
+  animation-delay: 1.5s;
+}
+
+.element-3 {
+  bottom: 25%;
+  left: 20%;
+  animation-delay: 3s;
+}
+
+.element-4 {
+  bottom: 20%;
+  right: 25%;
+  animation-delay: 4.5s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(180deg);
+  }
+}
+
+.section-divider {
+  border-color: rgba(255, 255, 255, 0.2);
+  margin: 32px 0;
+}
+
+/* 输入区域 */
+.input-section {
+  margin-bottom: 32px;
+}
+
+/* 诗歌展示区域 */
+.poem-section {
+  margin: 48px 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.section-title {
+  color: white;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.section-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  margin: 0;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* 使用说明 */
+.guide-section {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  margin-top: 48px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.guide-title {
+  color: white;
+  text-align: center;
+  margin-bottom: 32px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.guide-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.08) 100%);
+  padding: 24px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(45, 90, 39, 0.3);
+  box-shadow: 
+    0 4px 16px rgba(45, 90, 39, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.guide-step:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.12) 100%);
+  border-color: rgba(45, 90, 39, 0.5);
+  box-shadow: 
+    0 8px 32px rgba(45, 90, 39, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+
+.step-number {
+  background: linear-gradient(135deg, #4a7c59 0%, #2d5a27 100%);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 4px 16px rgba(74, 124, 89, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(45, 90, 39, 0.8);
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.8),
+    0 0 0 2px rgba(45, 90, 39, 1),
+    0 0 0 3px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(135deg, rgba(45, 90, 39, 0.3) 0%, rgba(45, 90, 39, 0.25) 100%);
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 2px solid rgba(45, 90, 39, 0.6);
+  box-shadow: 
+    0 2px 8px rgba(45, 90, 39, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.step-description {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(45, 90, 39, 0.9),
+    0 0 0 2px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(135deg, rgba(45, 90, 39, 0.2) 0%, rgba(45, 90, 39, 0.15) 100%);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid rgba(45, 90, 39, 0.5);
+  margin-top: 6px;
+  box-shadow: 
+    0 2px 6px rgba(45, 90, 39, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 16px;
+  }
+  
+  .page-header {
+    padding: 40px 20px;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .page-description {
+    font-size: 1rem;
+  }
+  
+  .guide-steps {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .guide-step {
+    padding: 20px;
+  }
+  
+  .floating-element {
+    font-size: 1.5rem;
+  }
+}

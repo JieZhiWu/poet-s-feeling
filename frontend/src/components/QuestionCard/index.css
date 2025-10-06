@@ -1,0 +1,17 @@
+.question-card {
+    width: 100%;
+}
+
+.answer-content {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.answer-content :global(p) {
+    white-space: pre-wrap;
+}
+
+.answer-content :global(pre) {
+    white-space: pre-wrap;
+    overflow-x: auto;
+}

@@ -1,0 +1,129 @@
+import { Form, message, Modal, Select } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  addQuestionBankQuestionUsingPost,
+  listQuestionBankQuestionVoByPageUsingPost,
+  removeQuestionBankQuestionUsingPost,
+} from "@/api/questionBankQuestionController";
+import { listQuestionBankVoByPageUsingPost } from "@/api/questionBankController";
+
+interface Props {
+  questionId?: number;
+  visible: boolean;
+  onCancel: () => void;
+}
+
+/**
+ * 更新诗歌所属诗人弹窗
+ * @param props
+ * @constructor
+ */
+const UpdateBankModal: React.FC<Props> = (props) => {
+  const { questionId, visible, onCancel } = props;
+  const [form] = Form.useForm();
+  const [questionBankList, setQuestionBankList] = useState<
+    API.QuestionBankVO[]
+  >([]);
+
+  // 获取所属诗人列表
+  const getCurrentQuestionBankIdList = async () => {
+    try {
+      const res = await listQuestionBankQuestionVoByPageUsingPost({
+        questionId,
+        pageSize: 20,
+      });
+      // @ts-ignore
+      const list = (res.data?.records ?? []).map((item) => item.questionBankId);
+      console.log(list);
+      form.setFieldValue("questionBankIdList" as any, list);
+    } catch (e) {
+      // @ts-ignore
+      message.error("获取诗歌所属诗人列表失败，" + e.message);
+    }
+  };
+
+  useEffect(() => {
+    if (questionId) {
+      getCurrentQuestionBankIdList();
+    }
+  }, [questionId]);
+
+  // 获取诗人列表
+  const getQuestionBankList = async () => {
+    // 诗人数量不多，直接全量获取
+    const pageSize = 200;
+
+    try {
+      const res = await uestionBankVoByPageUsingPost({
+        pageSize,
+        sortField: "createTime",
+        sortOrder: "descend",
+      });
+      // @ts-ignore
+      setQuestionBankList(res.data?.records ?? []);
+    } catch (e) {
+      // @ts-ignore
+      message.error("获取诗人列表失败，" + e.message);
+    }
+  };
+
+  useEffect(() => {
+    getQuestionBankList();
+  }, []);
+
+  return (
+    <Modal
+      destroyOnClose
+      title={"更新所属诗人"}
+      open={visible}
+      footer={null}
+      onCancel={() => {
+        onCancel?.();
+      }}
+    >
+      <Form form={form} style={{ marginTop: 24 }}>
+        <Form.Item label="所属诗人" name="questionBankIdList">
+          <Select
+            mode="multiple"
+            style={{ width: "100%" }}
+            options={questionBankList.map((questionBank) => {
+              return {
+                label: questionBank.title,
+                value: questionBank.id,
+              };
+            })}
+            onSelect={async (value) => {
+              const hide = message.loading("正在更新");
+              try {
+                await addQuestionBankQuestionUsingPost({
+                  questionId,
+                  questionBankId: value,
+                });
+                hide();
+                message.success("绑定诗人成功");
+              } catch (error: any) {
+                hide();
+                message.error("绑定诗人失败，" + error.message);
+              }
+            }}
+            onDeselect={async (value) => {
+              const hide = message.loading("正在更新");
+              try {
+                await removeQuestionBankQuestionUsingPost({
+                  questionId,
+                  questionBankId: value,
+                });
+                hide();
+                message.success("取消绑定诗人成功");
+              } catch (error: any) {
+                hide();
+                message.error("取消绑定诗人失败，" + error.message);
+              }
+            }}
+          />
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+export default UpdateBankModal;

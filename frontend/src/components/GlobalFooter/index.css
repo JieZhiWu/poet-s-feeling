@@ -1,0 +1,72 @@
+.global-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #f0f8f0 0%, #e8f5e8 100%);
+    text-align: center;
+    padding: 20px 16px;
+    border-top: 1px solid rgba(107, 142, 35, 0.1);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-decorations {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 8px;
+}
+
+.footer-icon {
+    font-size: 18px;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.footer-icon.pen {
+    color: #6b8e23;
+    animation: float 3s ease-in-out infinite;
+}
+
+.footer-icon.book {
+    color: #4a7c59;
+    animation: float 3s ease-in-out infinite 1s;
+}
+
+.footer-icon.heart {
+    color: #2d5016;
+    animation: float 3s ease-in-out infinite 2s;
+}
+
+.footer-icon:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.footer-text {
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.footer-quote {
+    color: #888;
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}

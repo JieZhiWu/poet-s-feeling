@@ -1,0 +1,247 @@
+.poem-history-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #6b8e23 100%);
+  padding: 32px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 48px 40px;
+  border-radius: 24px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(45, 80, 22, 0.2);
+}
+
+.page-title {
+  color: white;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.title-icon {
+  color: #90EE90;
+  font-size: 40px;
+}
+
+.page-description {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 22px;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.history-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 诗歌历史卡片样式 */
+.poem-history-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.poem-history-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.poem-title {
+  margin: 0;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.poem-title .title-icon {
+  color: #667eea;
+}
+
+.create-time {
+  font-size: 12px;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.poem-preview {
+  margin: 16px 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.poem-content {
+  margin: 0;
+  color: #2c3e50;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.poem-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.keyword-tag {
+  border-radius: 12px;
+  font-size: 12px;
+  padding: 2px 8px;
+  border: none;
+}
+
+/* 空状态样式 */
+.empty-state {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 60px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.empty-state .ant-empty-description {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 模态框样式 */
+.poem-detail-modal .ant-modal-header {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #6b8e23 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+.poem-detail-modal .ant-modal-title {
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.poem-detail-modal .ant-modal-close {
+  color: white;
+}
+
+.poem-detail-content {
+  padding: 20px 0;
+}
+
+.poem-text-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.poem-text-section::before {
+  content: '"';
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 36px;
+  color: #6b8e23;
+  opacity: 0.3;
+  font-family: serif;
+}
+
+.poem-text-section::after {
+  content: '"';
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  font-size: 36px;
+  color: #6b8e23;
+  opacity: 0.3;
+  font-family: serif;
+}
+
+.modal-poem-text {
+  margin: 0;
+  text-align: center;
+  font-size: 16px;
+  line-height: 2;
+  color: #2c3e50;
+  font-family: 'Georgia', '宋体', serif;
+}
+
+.modal-poem-line {
+  margin: 6px 0;
+}
+
+.modal-poem-line:empty {
+  margin: 12px 0;
+}
+
+.poem-meta-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .poem-history-page {
+    padding: 16px;
+  }
+  
+  .page-header {
+    padding: 24px 16px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .create-time {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+  
+  .poem-detail-modal {
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+  }
+}
