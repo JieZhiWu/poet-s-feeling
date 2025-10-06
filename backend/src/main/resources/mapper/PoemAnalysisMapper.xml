@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiewu.mianshigo.mapper.PoemAnalysisMapper">
+
+    <resultMap id="BaseResultMap" type="com.jiewu.mianshigo.model.entity.PoemAnalysis">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="poemId" column="poem_id" jdbcType="BIGINT"/>
+        <result property="analysis" column="analysis" jdbcType="LONGVARCHAR"/>
+        <result property="style" column="style" jdbcType="VARCHAR"/>
+        <result property="inspiration" column="inspiration" jdbcType="LONGVARCHAR"/>
+        <result property="relatedThemes" column="related_themes" jdbcType="VARCHAR"/>
+        <result property="modelName" column="model_name" jdbcType="VARCHAR"/>
+        <result property="prompt" column="prompt" jdbcType="LONGVARCHAR"/>
+        <result property="aiResponse" column="ai_response" jdbcType="VARCHAR"/>
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,poem_id,analysis,style,inspiration,related_themes,model_name,prompt,ai_response,createTime,updateTime,isDelete
+    </sql>
+
+</mapper>

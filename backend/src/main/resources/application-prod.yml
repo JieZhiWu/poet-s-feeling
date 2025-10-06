@@ -1,0 +1,33 @@
+# 线上配置文件
+
+server:
+  port:
+spring:
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://124.223.189.45:3306/mianshigo
+    username:
+    password:
+  # Redis 配置
+  redis:
+    database: 1
+    host:
+    port: 6379
+    timeout: 5000
+    password:
+  # Elasticsearch 配置
+  elasticsearch:
+    uris:
+    username: root
+    password:
+mybatis-plus:
+  configuration:
+    # 生产环境关闭日志
+    log-impl: ''
+# 接口文档配置
+knife4j:
+  basic:
+    enable: true
+    username: root
+    password:
