@@ -4,6 +4,97 @@
 
 **芥雾浮心** 是一个诗歌阅读、AI智能创作的现代化Web应用平台。项目名称寓意"借虚假之物，愿一丝暖意浮于心间"，旨在为用户提供一个诗歌阅读和记录空间。
 
+
+
+### 该项目现已下线。由于过去AI使用的干扰，个人将项目前后端代码重写并增添新功能。若关心其网页内容，以下是过去部分的页面截图。
+
+
+#### 主页：
+
+![image-20251019193052418](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019193052418.png)
+
+---
+
+![image-20251019193218873](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019193218873.png)
+
+---
+
+![image-20251019194142886](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019194142886.png)
+
+---
+
+##### 当页面发生调整时，内容显示动态调整![image-20251019193946077](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019193946077.png)
+
+---
+
+---
+
+#### AI功能：文本转诗歌![image-20251019195047234](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019195047234.png)
+
+---
+
+![image-20251019195733664](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019195733664.png)
+
+![image-20251019195823969](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019195823969.png)
+
+---
+
+![image-20251019195941641](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019195941641.png)
+
+---
+
+![image-20251019200025020](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019200025020.png)
+
+---
+
+#### 诗歌发布交流平台：![image-20251019200302873](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019200302873.png)
+
+<img src="https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019200531632.png" alt="image-20251019200531632"  />
+
+---
+
+---
+
+#### 诗人/诗歌展示
+
+![image-20251019200922700](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019200922700.png)
+
+---
+
+![image-20251019201012473](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019201012473.png)
+
+![image-20251019201114979](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019201114979.png)
+
+---
+
+![image-20251019201225595](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019201225595.png)
+
+![image-20251019201330455](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019201330455.png)
+
+---
+
+#### 诗歌大全页面：![image-20251019201409899](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019201409899.png)
+
+---
+
+#### 管理页面（若用户不是管理员，将不显示该导航栏）
+
+![image-20251019201758949](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019201758949.png)
+
+---
+
+#### 个人信息页：（BitSet 阅读签到记录）
+
+![image-20251019201921643](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019201921643.png)
+
+---
+
+#### 搜索：（es模糊搜索）
+
+![image-20251019202449081](https://poem-s-feeling.oss-cn-beijing.aliyuncs.com/image-20251019202449081.png)
+
+
+
 ### 🎯 核心价值
 
 - **诗歌知识库**：精选中外经典诗人及其代表作品，提供诗歌在线阅读平台
